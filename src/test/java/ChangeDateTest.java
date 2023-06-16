@@ -1,7 +1,11 @@
 import com.codeborne.selenide.Condition;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
+import io.qameta.allure.selenide.AllureSelenide;
+import com.codeborne.selenide.logevents.SelenideLogger;
 
 
 import java.time.Duration;
@@ -11,9 +15,20 @@ import static com.codeborne.selenide.Selenide.*;
 public class ChangeDateTest {
 
     @BeforeEach
-    void setUp() {
+    void setup() {
         open("http://localhost:7777/");
     }
+    @BeforeAll
+    static void setUp() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
+    }
+
+
+
 
     @Test
     void ShouldChangeMeetingDate() {
